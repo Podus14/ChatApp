@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ChangeEvent } from 'react';
 import type { User } from '../../types/user';
 import { ContactTabs } from './components/ContactTab';
 import { ContactItem } from './components/ContactItem';
@@ -6,6 +6,7 @@ import {
   CONTACT_TABS_OPTIONS,
   CONTACT_TABS_VALUES,
 } from '../../const/contactTabs';
+import { Input } from '../Input/Input';
 
 type ContactSectionProps = {
   contacts: User[];
@@ -19,12 +20,23 @@ export const ContactSection = ({
   onSelectChat,
 }: ContactSectionProps) => {
   const [filteredContacts, setFilteredContacts] = useState(contacts);
+  const [value, setValue] = useState<string>('');
 
-  const handleFilterContacts = (activeTab: string) => {
+  const handleFilterTabChange = (activeTab: string) => {
     setFilteredContacts(
       activeTab === CONTACT_TABS_VALUES.online
-        ? contacts.filter((c) => c.online)
+        ? contacts.filter((contact) => contact.online)
         : contacts
+    );
+  };
+
+  const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setValue(query);
+    setFilteredContacts(
+      contacts.filter((c) =>
+        c.name.toLowerCase().includes(query.trim().toLowerCase())
+      )
     );
   };
 
@@ -33,13 +45,13 @@ export const ContactSection = ({
   }, [contacts]);
 
   return (
-    <div className="max-w-[260px] flex flex-col">
+    <section className="min-w-[260px] flex flex-col">
       <ContactTabs
         tabs={CONTACT_TABS_OPTIONS}
-        onChange={handleFilterContacts}
+        onChange={handleFilterTabChange}
       />
 
-      <div className="flex flex-col overflow-y-auto">
+      <div className="flex flex-col max-w-[260px] p-4 h-[300px] justify-between">
         {filteredContacts.length > 0 ? (
           filteredContacts.map((contact) => (
             <ContactItem
@@ -52,7 +64,12 @@ export const ContactSection = ({
         ) : (
           <p className="text-sm text-center py-4">No users found</p>
         )}
+        <Input
+          placeholder="Search..."
+          onChange={handleFilterChange}
+          value={value}
+        />
       </div>
-    </div>
+    </section>
   );
 };

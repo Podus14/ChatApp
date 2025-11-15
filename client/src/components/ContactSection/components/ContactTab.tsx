@@ -9,7 +9,7 @@ type ContactTabsProps = {
 };
 
 export const ContactTabs = ({ tabs, onChange }: ContactTabsProps) => {
-  const [activeTab, setActiveTab] = useState(tabs[0].value);
+  const [activeTab, setActiveTab] = useState(tabs[1].value);
 
   const handleChange = (newTab: string) => {
     setActiveTab(newTab);
@@ -17,7 +17,7 @@ export const ContactTabs = ({ tabs, onChange }: ContactTabsProps) => {
   };
 
   return (
-    <div className="flex ">
+    <div className="flex">
       {tabs.map((tab, index) => {
         const classNames = getContactTabsClassNames({
           activeTab,

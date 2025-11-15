@@ -19,7 +19,7 @@ export const ContactItem = ({
     <button
       key={id}
       className={cn(
-        'pl-4 flex gap-4 items-center py-1 cursor-pointer',
+        ' flex gap-4 items-center py-1 cursor-pointer',
         selectedContact?.id === contact.id ? 'bg-selected' : 'hover:bg-selected'
       )}
       onClick={() => onSelectChat(contact)}
