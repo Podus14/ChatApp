@@ -17,7 +17,7 @@ export const Input = ({
   return (
     <input
       className={cn(
-        'w-full p-3 border text-sm border-input-primary rounded-md focus:outline-none focus:ring-2 focus:border-input-focus',
+        'w-full p-2 border text-sm border-input-primary rounded-md focus:outline-none focus:ring-2 focus:border-input-focus',
         className
       )}
       onChange={(e) => {

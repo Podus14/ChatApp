@@ -21,6 +21,9 @@
   --color-text-date: #8c8c8c;
   --color-text-secondary: #aeaeae;
 
+  --color-time-sent: #bba08e;
+  --color-time-received: #9aa8b7;
+
   --color-border-primary: #dddddd;
 
   --color-input-primary: #cccccc;
@@ -44,4 +47,17 @@
 
 html {
   font-family: var(--font-sans);
+}
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+    border-radius: 9999px;
+    @apply bg-[#becbd9];
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    @apply bg-[#9daab9];
+  }
 }

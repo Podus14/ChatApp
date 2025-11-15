@@ -51,19 +51,21 @@ export const ContactSection = ({
         onChange={handleFilterTabChange}
       />
 
-      <div className="flex flex-col max-w-[260px] p-4 h-[300px] justify-between">
-        {filteredContacts.length > 0 ? (
-          filteredContacts.map((contact) => (
-            <ContactItem
-              key={contact.id}
-              contact={contact}
-              selectedContact={selectedContact}
-              onSelectChat={onSelectChat}
-            />
-          ))
-        ) : (
-          <p className="text-sm text-center py-4">No users found</p>
-        )}
+      <div className="flex flex-col max-w-[260px] flex-1 p-4 justify-between">
+        <div className="flex flex-col">
+          {filteredContacts.length > 0 ? (
+            filteredContacts.map((contact) => (
+              <ContactItem
+                key={contact.id}
+                contact={contact}
+                selectedContact={selectedContact}
+                onSelectChat={onSelectChat}
+              />
+            ))
+          ) : (
+            <p className="text-sm text-center py-4">No users found</p>
+          )}
+        </div>
         <Input
           placeholder="Search..."
           onChange={handleFilterChange}
