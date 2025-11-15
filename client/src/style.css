@@ -1,0 +1,45 @@
+@import 'tailwindcss';
+@import '@fontsource/open-sans';
+@import '@fontsource/open-sans/600.css';
+@import '@fontsource/open-sans/700.css';
+
+@theme {
+  --color-primary: #586670;
+
+  --color-message-received: #becbd9;
+  --color-message-sent: #f0cbb3;
+
+  --color-chat-header: #becbd9;
+  --color-chat-body: #d7dfe7;
+
+  --color-button: #428bca;
+  --color-selected: #f8f8f8;
+  --color-tab: #f8f8f8;
+  --color-status-online: #20d63e;
+  --color-status-offline: #ff4d4f;
+
+  --color-text-primary: #1d1d1d;
+  --color-text-date: #8c8c8c;
+  --color-text-secondary: #aeaeae;
+
+  --color-border-primary: #dddddd;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 32px;
+  --text-3xl: 40px;
+  --text-4xl: 48px;
+
+  --font-sans: 'Open Sans', sans-serif;
+}
+
+.container {
+  @apply mx-auto max-w-[1140px] px-4;
+}
+
+html {
+  font-family: var(--font-sans);
+}
