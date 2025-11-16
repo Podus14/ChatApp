@@ -12,7 +12,6 @@ export const Chat = () => {
   const [contacts, setContacts] = useState<User[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [selectedContact, setSelectedContact] = useState<User | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
     const user = getUser();
@@ -20,12 +19,7 @@ export const Chat = () => {
     Promise.resolve().then(() => setUser(user));
 
     socket.on('connect', () => {
-      setIsConnected(true);
       socket.emit('init', user);
-    });
-
-    socket.on('disconnect', () => {
-      setIsConnected(false);
     });
 
     socket.on('contacts', (users: User[]) => {

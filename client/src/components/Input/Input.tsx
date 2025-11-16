@@ -1,4 +1,4 @@
-import { useState, type ComponentPropsWithRef } from 'react';
+import { useEffect, useState, type ComponentPropsWithRef } from 'react';
 import { cn } from '../../utils/cn';
 
 type InputProps = ComponentPropsWithRef<'input'> & {
@@ -13,6 +13,11 @@ export const Input = ({
   ...props
 }: InputProps) => {
   const [value, setValue] = useState(externalValue ?? defaultValue);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setValue(externalValue ?? defaultValue);
+  }, [externalValue, defaultValue]);
 
   return (
     <input

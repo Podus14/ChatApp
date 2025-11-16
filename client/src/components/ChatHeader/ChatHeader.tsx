@@ -8,7 +8,7 @@ export const ChatHeader = ({ selectedContact }: ChatHeaderProps) => (
   <div className="flex gap-5 bg-chat-header">
     {selectedContact ? (
       <img
-        className="max-w-[173px] max-h-[173px]"
+        className="w-[173px] h-[173px]"
         src={selectedContact?.avatar}
         alt="User Image"
         width={173}

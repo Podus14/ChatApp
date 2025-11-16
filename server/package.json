@@ -1,15 +1,12 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon --loader ts-node/esm index.ts"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.ts --exec ts-node",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
   "dependencies": {
     "express": "^5.1.0",
     "socket.io": "^4.8.1"
