@@ -1,15 +1,23 @@
 import type { Server } from 'socket.io';
 import type { Message } from '../types/message';
 import type { User } from '../types/user';
+import type { UserSocketMap } from '../types/appState';
+import type { BotMessage } from '../types/bots';
 
-export const createBotHandlers = (
-  io: Server,
-  messages: Message[],
-  users: User[],
-  userSocketMap: Map<string, Set<string>>,
-  spamMessages: string[]
-) => {
-  const sendBotMessage = (botId: string, toUserId: string, text: string) => {
+export const createBotHandlers = ({
+  io,
+  messages,
+  users,
+  userSocketMap,
+  spamMessages,
+}: {
+  io: Server;
+  messages: Message[];
+  users: User[];
+  userSocketMap: UserSocketMap;
+  spamMessages: string[];
+}) => {
+  const sendBotMessage = ({ botId, toUserId, text }: BotMessage) => {
     const message: Message = {
       from: botId,
       to: toUserId,
@@ -27,19 +35,19 @@ export const createBotHandlers = (
     }
   };
 
-  const handleBotMessage = (
-    botId: string,
-    fromUserId: string,
-    text: string
-  ) => {
+  const handleBotMessage = ({ botId, toUserId, text }: BotMessage) => {
     switch (botId) {
       case 'bot-echo':
-        sendBotMessage(botId, fromUserId, text);
+        sendBotMessage({ botId, toUserId, text });
         break;
 
       case 'bot-reverse':
         setTimeout(() => {
-          sendBotMessage(botId, fromUserId, text.split('').reverse().join(''));
+          sendBotMessage({
+            botId,
+            toUserId,
+            text: text.split('').reverse().join(''),
+          });
         }, 3000);
         break;
 
@@ -54,15 +62,14 @@ export const createBotHandlers = (
       const delay = 10_000 + Math.random() * (120_000 - 10_000);
 
       setTimeout(() => {
-        const onlineUsers = users.filter(
-          (u) => u.online && !u.id.startsWith('bot-')
-        );
+        const onlineUsers = users.filter((u) => u.online && !isUserBot(u.id));
         if (onlineUsers.length > 0) {
           const user =
             onlineUsers[Math.floor(Math.random() * onlineUsers.length)];
           const msg =
             spamMessages[Math.floor(Math.random() * spamMessages.length)];
-          if (user && msg) sendBotMessage('bot-spam', user.id, msg);
+          if (user && msg)
+            sendBotMessage({ botId: 'bot-spam', toUserId: user.id, text: msg });
         }
         run();
       }, delay);
@@ -72,3 +79,5 @@ export const createBotHandlers = (
 
   return { handleBotMessage, sendBotMessage, startSpamBot };
 };
+
+export const isUserBot = (id: string) => id.startsWith('bot-');
