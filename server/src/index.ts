@@ -1,4 +1,3 @@
-import express from 'express';
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
 import { BOTS } from './const/bots.js';
@@ -7,8 +6,10 @@ import type { User } from './types/user.js';
 import type { Message } from './types/message.js';
 import { createBotHandlers } from './utils/bots.js';
 
-const app = express();
-const httpServer = createServer(app);
+const httpServer = createServer((req, res) => {
+  res.writeHead(404);
+  res.end();
+});
 
 const io = new Server(httpServer, {
   cors: { origin: 'http://localhost:5173' },
