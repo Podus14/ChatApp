@@ -19,20 +19,20 @@ export const ContactItem = ({
     <button
       key={id}
       className={cn(
-        ' flex gap-4 items-center py-1 cursor-pointer',
+        ' flex gap-4 items-center py-1 cursor-pointer max-md:justify-center px-4',
         selectedContact?.id === contact.id ? 'bg-selected' : 'hover:bg-selected'
       )}
       onClick={() => onSelectChat(contact)}
     >
-      <div className="relative w-fit">
+      <div className="relative md:w-full">
         <img
           src={avatar}
           alt="contact avatar"
-          className="min-w-[60px] min-h-[60px] relative"
+          className="w-20 h-20 md:w-[60px] md:min-w-[60px] md:h-[60px] relative"
         />
         <StatusDot online={online} />
       </div>
-      <div className="flex flex-col text-left">
+      <div className="flex-col text-left hidden md:flex">
         <p className="font-semibold">{name}</p>
         <p className="text-sm line-clamp-2">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Velit

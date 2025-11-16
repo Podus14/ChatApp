@@ -19,10 +19,10 @@ export const getContactTabsClassNames = ({
   const borderClasses = isActive
     ? 'border-none'
     : isFirst
-    ? 'border-r border-b border-primary'
+    ? 'border-r border-b border-tab-secondary'
     : isLast
-    ? 'border-l border-b border-primary'
-    : 'border-b border-primary';
+    ? 'border-l border-b border-tab-secondary'
+    : 'border-b border-tab-secondary';
 
   const classNames = cn(isActive ? 'bg-white' : 'bg-tab', borderClasses);
 

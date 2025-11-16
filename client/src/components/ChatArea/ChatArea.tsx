@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import type { Message } from '../../types/message';
 import type { User } from '../../types/user';
-import { MessageItem } from '../MessageItem/MessageItem';
 import { Input } from '../Input/Input';
 import { socket } from '../../socket';
-import { getFilteredMessages } from '../../utils/message';
+import { SendButton } from './components/SendButton';
+import { Messages } from './components/Messages';
 
 type ChatAreaProps = {
   selectedContact: User | null;
@@ -37,40 +37,14 @@ export const ChatArea = ({
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-chat-body min-h-0">
+    <section className="flex-1 flex flex-col bg-chat-body min-h-0">
       {selectedContact ? (
         <>
-          <div className="my-5 min-h-0 overflow-y-auto flex-1 px-5">
-            <div className="flex-1 p-4 space-y-4 min-h-0">
-              {getFilteredMessages({ user, messages, selectedContact })
-                .length === 0 ? (
-                <div className="flex items-center justify-center h-full text-gray-400">
-                  <p>No messages yet. Start the conversation!</p>
-                </div>
-              ) : (
-                getFilteredMessages({ user, messages, selectedContact }).map(
-                  (msg, index) => {
-                    const isMyMessage = msg.from === user?.id;
-
-                    return (
-                      <MessageItem
-                        key={index}
-                        text={msg.text}
-                        timestamp={msg.timestamp}
-                        userName={
-                          isMyMessage ? user.name : selectedContact?.name
-                        }
-                        variant={isMyMessage ? 'sent' : 'received'}
-                        seen={false}
-                      />
-                    );
-                  }
-                )
-              )}
-            </div>
-          </div>
-
-          {/* Message input - фиксированный внизу */}
+          <Messages
+            user={user}
+            messages={messages}
+            selectedContact={selectedContact}
+          />
           <div className="flex gap-2 p-4">
             <Input
               value={messageText}
@@ -84,23 +58,19 @@ export const ChatArea = ({
               placeholder="Type a message..."
               className="bg-input-primary"
             />
-            <button
-              onClick={handleSendMessage}
-              disabled={!messageText.trim()}
-              className="text-sm bg-button text-white font-semibold text-nowrap px-[53px] rounded-lg hover:opacity-80 disabled:bg-primary disabled:cursor-not-allowed cursor-pointer"
-            >
-              Send message
-            </button>
+            <SendButton
+              onSendMessage={handleSendMessage}
+              messageText={messageText}
+            />
           </div>
         </>
       ) : (
         <div className="flex items-center justify-center h-full text-gray-400">
           <div className="text-center">
-            <p className="text-xl mb-2">👋</p>
-            <p>Select a user to start chatting</p>
+            <p>Select a user to start chatting!</p>
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };

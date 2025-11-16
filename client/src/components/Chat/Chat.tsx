@@ -78,7 +78,7 @@ export const Chat = () => {
       <main className="container w-full mt-5 flex-1 min-h-0">
         <div className="flex rounded-lg overflow-hidden bg-white h-[95%]">
           <div className="flex-col flex flex-1 min-w-0">
-            <ChatHeader selectedContact={selectedContact} />
+            <ChatHeader selectedContact={selectedContact} user={user} />
             <ChatArea
               user={user}
               selectedContact={selectedContact}

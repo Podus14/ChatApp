@@ -24,7 +24,7 @@
   --color-time-sent: #bba08e;
   --color-time-received: #9aa8b7;
 
-  --color-border-primary: #dddddd;
+  --color-tab-secondary: #dddddd;
 
   --color-input-primary: #cccccc;
   --color-input-focus: #74b9ef;
@@ -54,6 +54,7 @@ html {
     width: 12px;
     height: 12px;
     border-radius: 9999px;
+    margin-right: 12px;
     @apply bg-[#becbd9];
   }
   ::-webkit-scrollbar-thumb {

@@ -45,13 +45,13 @@ export const ContactSection = ({
   }, [contacts]);
 
   return (
-    <section className="min-w-[260px] flex flex-col">
+    <section className="md:min-w-[260px] max-md:w-32 flex flex-col">
       <ContactTabs
         tabs={CONTACT_TABS_OPTIONS}
         onChange={handleFilterTabChange}
       />
 
-      <div className="flex flex-col max-w-[260px] flex-1 p-4 justify-between">
+      <div className="flex flex-col md:max-w-[260px] flex-1 py-4 justify-between">
         <div className="flex flex-col">
           {filteredContacts.length > 0 ? (
             filteredContacts.map((contact) => (
@@ -66,11 +66,13 @@ export const ContactSection = ({
             <p className="text-sm text-center py-4">No users found</p>
           )}
         </div>
-        <Input
-          placeholder="Search..."
-          onChange={handleFilterChange}
-          value={value}
-        />
+        <div className="px-4">
+          <Input
+            placeholder="Search..."
+            onChange={handleFilterChange}
+            value={value}
+          />
+        </div>
       </div>
     </section>
   );
