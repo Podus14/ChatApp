@@ -3,6 +3,7 @@ import type { Message } from '../types/message';
 import type { User } from '../types/user';
 import type { UserSocketMap } from '../types/appState';
 import type { BotMessage } from '../types/bots';
+import { BOT_IDS } from '../const/bots.js';
 
 export const createBotHandlers = ({
   io,
@@ -37,11 +38,11 @@ export const createBotHandlers = ({
 
   const handleBotMessage = ({ botId, toUserId, text }: BotMessage) => {
     switch (botId) {
-      case 'bot-echo':
+      case BOT_IDS.echo:
         sendBotMessage({ botId, toUserId, text });
         break;
 
-      case 'bot-reverse':
+      case BOT_IDS.reverse:
         setTimeout(() => {
           sendBotMessage({
             botId,
@@ -51,8 +52,8 @@ export const createBotHandlers = ({
         }, 3000);
         break;
 
-      case 'bot-spam':
-      case 'bot-ignore':
+      case BOT_IDS.spam:
+      case BOT_IDS.ignore:
         break;
     }
   };
