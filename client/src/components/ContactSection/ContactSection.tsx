@@ -51,7 +51,7 @@ export const ContactSection = ({
         onChange={handleFilterTabChange}
       />
 
-      <div className="flex flex-col md:max-w-[260px] flex-1 py-4 justify-between">
+      <div className="flex flex-col md:max-w-[260px] flex-1 py-4 justify-between overflow-y-auto">
         <div className="flex flex-col">
           {filteredContacts.length > 0 ? (
             filteredContacts.map((contact) => (
@@ -66,13 +66,13 @@ export const ContactSection = ({
             <p className="text-sm text-center py-4">No users found</p>
           )}
         </div>
-        <div className="px-4">
-          <Input
-            placeholder="Search..."
-            onChange={handleFilterChange}
-            value={value}
-          />
-        </div>
+      </div>
+      <div className="p-4">
+        <Input
+          placeholder="Search..."
+          onChange={handleFilterChange}
+          value={value}
+        />
       </div>
     </section>
   );
