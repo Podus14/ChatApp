@@ -13,7 +13,7 @@ export const ChatHeader = ({ selectedContact, user }: ChatHeaderProps) => (
     ) : (
       <img
         className="md:w-[173px] md:h-[173px] w-20 h-20"
-        src={user?.avatar ?? selectedContact?.avatar}
+        src={selectedContact?.avatar ?? user?.avatar}
         alt="User Image"
         width={173}
         height={173}

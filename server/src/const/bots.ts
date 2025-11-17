@@ -1,3 +1,5 @@
+import type { User } from '../types/user';
+
 export const BOT_IDS = {
   echo: 'bot-echo',
   reverse: 'bot-reverse',
@@ -5,7 +7,7 @@ export const BOT_IDS = {
   ignore: 'bot-ignore',
 } as const;
 
-export const BOTS = [
+export const BOTS: User[] = [
   {
     id: BOT_IDS.echo,
     name: 'Echo Bot',
