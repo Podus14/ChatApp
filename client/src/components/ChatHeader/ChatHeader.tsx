@@ -21,7 +21,9 @@ export const ChatHeader = ({ selectedContact, user }: ChatHeaderProps) => (
     )}
 
     <div className="flex flex-col md:mt-5 min-w-0">
-      <p className="md:text-xl font-semibold">{selectedContact?.name}</p>
+      <p className="md:text-xl font-semibold">
+        {selectedContact?.name ?? user?.name}
+      </p>
       <p className="text-sm max-md:truncate ">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae,
         possimus suscipit rerum quis vel harum distinctio optio adipisci
