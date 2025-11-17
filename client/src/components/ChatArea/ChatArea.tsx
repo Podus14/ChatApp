@@ -5,6 +5,7 @@ import { Input } from '../Input/Input';
 import { socket } from '../../socket';
 import { SendButton } from './components/SendButton';
 import { Messages } from './components/Messages';
+import { SOCKET_EVENTS } from '../../const/socket';
 
 type ChatAreaProps = {
   selectedContact: User | null;
@@ -31,7 +32,10 @@ export const ChatArea = ({
       timestamp: Date.now(),
     };
 
-    socket.emit('send-message', { to: selectedContact.id, text: messageText });
+    socket.emit(SOCKET_EVENTS.sendMessage, {
+      to: selectedContact.id,
+      text: messageText,
+    });
     onSetMessages([...messages, message]);
     setMessageText('');
   };

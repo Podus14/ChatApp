@@ -6,6 +6,7 @@ import { ChatHeader } from '../ChatHeader/ChatHeader';
 import { ChatArea } from '../ChatArea/ChatArea';
 import { ContactSection } from '../ContactSection/ContactSection';
 import { socket } from '../../socket';
+import { SOCKET_EVENTS } from '../../const/socket';
 
 export const Chat = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -18,15 +19,15 @@ export const Chat = () => {
 
     Promise.resolve().then(() => setUser(user));
 
-    socket.on('connect', () => {
-      socket.emit('init', user);
+    socket.on(SOCKET_EVENTS.connect, () => {
+      socket.emit(SOCKET_EVENTS.init, user);
     });
 
-    socket.on('contacts', (users: User[]) => {
+    socket.on(SOCKET_EVENTS.contacts, (users: User[]) => {
       setContacts(users);
     });
 
-    socket.on('user-online', (newUser: User) => {
+    socket.on(SOCKET_EVENTS.userOnline, (newUser: User) => {
       setContacts((prev) => {
         if (newUser.id === user?.id) return prev;
 
@@ -42,7 +43,7 @@ export const Chat = () => {
       });
     });
 
-    socket.on('user-offline', (userData: { id: string }) => {
+    socket.on(SOCKET_EVENTS.userOfline, (userData: { id: string }) => {
       setContacts((prev) =>
         prev.map((u) => (u.id === userData.id ? { ...u, online: false } : u))
       );
@@ -52,17 +53,17 @@ export const Chat = () => {
       );
     });
 
-    socket.on('receive-message', (msg: Message) => {
+    socket.on(SOCKET_EVENTS.receiveMessage, (msg: Message) => {
       setMessages((prev) => [...prev, msg]);
     });
 
     return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('contacts');
-      socket.off('user-online');
-      socket.off('user-offline');
-      socket.off('receive-message');
+      socket.off(SOCKET_EVENTS.connect);
+      socket.off(SOCKET_EVENTS.disconnect);
+      socket.off(SOCKET_EVENTS.contacts);
+      socket.off(SOCKET_EVENTS.userOnline);
+      socket.off(SOCKET_EVENTS.userOfline);
+      socket.off(SOCKET_EVENTS.receiveMessage);
     };
   }, []);
 

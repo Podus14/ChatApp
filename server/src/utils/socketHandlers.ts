@@ -13,21 +13,22 @@ import type { Message } from '../types/message.js';
 import type { User } from '../types/user.js';
 import type { BotMessage } from '../types/bots.js';
 import { isUserBot } from './bots.js';
+import { SOCKET_EVENTS } from '../const/socket.js';
 
 const handleInit = ({ socket, state }: { socket: Socket; state: AppState }) => {
   const { users, userSocketMap } = state;
 
-  socket.on('init', (data: Omit<User, 'online'>) => {
+  socket.on(SOCKET_EVENTS.init, (data: Omit<User, 'online'>) => {
     addUserSocket({ userSocketMap, userId: data.id, socketId: socket.id });
 
     const { user, shouldBroadcast } = handleUserLogin({ users, data });
 
     if (shouldBroadcast) {
-      socket.broadcast.emit('user-online', user);
+      socket.broadcast.emit(SOCKET_EVENTS.userOnline, user);
     }
 
     const otherUsers = users.filter((u) => u.id !== data.id);
-    socket.emit('contacts', otherUsers);
+    socket.emit(SOCKET_EVENTS.contacts, otherUsers);
   });
 };
 
@@ -44,7 +45,7 @@ const handleSendMessage = ({
 }) => {
   const { messages, userSocketMap } = state;
 
-  socket.on('send-message', (msg: { to: string; text: string }) => {
+  socket.on(SOCKET_EVENTS.sendMessage, (msg: { to: string; text: string }) => {
     const toUserId = findUserIdBySocketId({
       userSocketMap,
       socketId: socket.id,
@@ -86,7 +87,7 @@ const handleDisconnect = ({
 }) => {
   const { users, userSocketMap } = state;
 
-  socket.on('disconnect', () => {
+  socket.on(SOCKET_EVENTS.disconnect, () => {
     const disconnectResult = handleUserDisconnect({
       socketId: socket.id,
       userSocketMap,
@@ -94,7 +95,9 @@ const handleDisconnect = ({
     });
 
     if (disconnectResult && !disconnectResult.isBot) {
-      io.emit('user-offline', { id: disconnectResult.disconnectedUserId });
+      io.emit(SOCKET_EVENTS.userOfline, {
+        id: disconnectResult.disconnectedUserId,
+      });
     }
   });
 };
@@ -108,7 +111,7 @@ export const registerSocketHandlers = ({
   state: AppState;
   handleBotMessage: ({ botId, toUserId, text }: BotMessage) => void;
 }) => {
-  io.on('connection', (socket: Socket) => {
+  io.on(SOCKET_EVENTS.connection, (socket: Socket) => {
     handleInit({ socket, state });
     handleSendMessage({ socket, io, state, handleBotMessage });
     handleDisconnect({ socket, io, state });
